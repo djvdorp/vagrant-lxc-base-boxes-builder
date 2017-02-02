@@ -1,5 +1,8 @@
 #!/bin/sh
+set -e
 set -x
+
+BOXES=`echo $1 | tr ',' ' '`
 
 export DEBIAN_FRONTEND=noninteractive
 sed -i 's/us.archive.ubuntu.com/nl.archive.ubuntu.com/g' /etc/apt/sources.list
@@ -23,6 +26,5 @@ update-rc.d lxc-net defaults
 locale-gen --purge en_US.UTF-8
 /bin/echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale
 
-git clone https://github.com/obnoxxx/vagrant-lxc-base-boxes.git /vagrant/workspace
 cd /vagrant/workspace
-make stretch
+make $BOXES
